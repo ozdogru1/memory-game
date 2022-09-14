@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import SingleCard from './components/SingleCard'
 const cardImages = [
-  { "src": "/img/helmet-1.png", matched: false },
-  { "src": "/img/potion-1.png", matched: false },
-  { "src": "/img/ring-1.png", matched: false },
-  { "src": "/img/scroll-1.png", matched: false },
-  { "src": "/img/shield-1.png", matched: false },
-  { "src": "/img/sword-1.png", matched: false },
+  { "src": "/img/helmet-1.png" },
+  { "src": "/img/potion-1.png" },
+  { "src": "/img/ring-1.png" },
+  { "src": "/img/scroll-1.png" },
+  { "src": "/img/shield-1.png" },
+  { "src": "/img/sword-1.png" },
 ]
 const App = () => {
   const [cards, setCards] = useState([])
@@ -18,15 +18,15 @@ const App = () => {
   const shuffleCards = () => {
     const shuffleCards = [...cardImages, ...cardImages]
       .sort(() => Math.random() - 0.5)
-      .map((card) => ({ ...card, id: Math.random() }))
-      setChoiceOne(null)
-      setChoiceTwo(null)
+      .map((card) => ({ ...card, id: Math.random(), matched: false }))
+
     setCards(shuffleCards)
     setTurns(0)
   }
   const handleChoice = (card) => {
     choiceOne ? setChoiceTwo(card) : setChoiceOne(card)
   }
+
   //compare choices 2 selected cards
   useEffect(() => {
     if (choiceOne && choiceTwo) {
@@ -43,14 +43,12 @@ const App = () => {
         })
         resetTurn()
       } else {
-        console.log("those cards don't match");
         setTimeout(() => {
           resetTurn()
         }, 1000);
       }
     }
   }, [choiceOne, choiceTwo])
-  console.log(cards);
   // reset choice and increase turn
   const resetTurn = () => {
     setChoiceOne(null)
@@ -61,6 +59,7 @@ const App = () => {
   useEffect(() => {
     shuffleCards()
   }, [])
+
 
   return (
     <div className="App">
